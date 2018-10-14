@@ -1,0 +1,18 @@
+.question-box-container{
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+}
+
+.clear-fix{
+    overflow: auto;
+}
+
+.clear-fix::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.button-group{
+    margin-top: 10px;
+}

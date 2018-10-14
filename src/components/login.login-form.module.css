@@ -1,0 +1,10 @@
+
+.login-form{
+    display: grid;
+    grid-template-rows: 4em 4em;
+}
+
+.login-username-field div > input,
+.login-password-field div > input{
+    width: 90% !important;
+}

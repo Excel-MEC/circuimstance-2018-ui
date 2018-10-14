@@ -1,0 +1,9 @@
+.signup-form{
+    display: grid;
+    grid-template-rows: 4em 4em 4em;
+}
+
+.signup-username-field div > input,
+.signup-password-field div > input{
+    width: 90% !important;
+}

@@ -1,0 +1,36 @@
+{
+    "roundname": "Awesome round",
+    "imageURL": "",
+    "description": "some round description",
+    "bonusEligible": false,
+    "questions": [
+        {
+            "id": "question_id0",
+            "isBonus": false,
+            "title": "regular question",
+            "description": "some desc",
+            "isNumeric": true
+        },
+        {
+            "id": "question_id1",
+            "isBonus": true,
+            "title": "bonus question",
+            "description": "some desc",
+            "isNumeric": true
+        },
+        {
+            "id": "question_id2",
+            "isBonus": false,
+            "title": "regular text question",
+            "description": "",
+            "isNumeric": false
+        },
+        {
+            "id": "question_id3",
+            "isBonus": true,
+            "title": "bonus text question",
+            "description": "",
+            "isNumeric": false
+        }
+    ]
+}

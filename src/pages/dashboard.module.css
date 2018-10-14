@@ -1,0 +1,14 @@
+.dashboard-container{
+    display: grid;
+}
+
+.game-section{
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+@media (min-width:767px){
+    .dashboard-container{
+        grid-template-columns: 20em auto;
+    }
+}

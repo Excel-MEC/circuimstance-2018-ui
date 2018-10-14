@@ -1,0 +1,13 @@
+.game-segment-container{
+    padding: 10px;
+}
+
+.clear-fix{
+    overflow: auto;
+}
+
+.clear-fix::after{
+    content: "";
+    clear: both;
+    display: table;
+}
