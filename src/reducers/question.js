@@ -18,7 +18,7 @@ const question = (state=DEFAULT_STATE,action) => {
         } 
 
         case RoundActionTypes.ROUND_FETCHED:{
-            const questions = payload.round.questions
+            const questions = action.payload.round.questions
             return {
                 ...state,
                 loading: false,

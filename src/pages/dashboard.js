@@ -18,7 +18,8 @@ import styles from './dashboard.module.css'
 const mapStateToProps = state => ({
     user: state.user,
     round: state.round,
-    game: state.game
+    game: state.game,
+    question: state.question
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -42,44 +43,48 @@ class Dashboard extends Component{
             { firstName: 'Roshan', score: 121,lastName: 'V'},
             { firstName: 'Renjith', score: 103,lastName: 'PK'},
         ],
-        questions: [
-            {title:"some question?",isBonus:false,answerType:"number", answered: false, disabled: false, id:12},
-            {title:"some question?",isBonus:false,answerType:"string", answered: true, disabled: false, id:34},
-            {title:"some question?",isBonus:false,answerType:"string", answered: true, disabled: false, id:342},
-            {title:"some question?",isBonus:false,answerType:"string", answered: false, disabled: false, id:454},
-            {title:"some question?",isBonus:false,answerType:"number", answered: true, disabled: false, id:23},
-            {title:"some question?",isBonus:true,answerType:"string", answered: false, disabled: false, id:890},
-        ],
+        // questions: [
+        //     {title:"some question?",isBonus:false,answerType:"number", answered: false, disabled: false, id:12},
+        //     {title:"some question?",isBonus:false,answerType:"string", answered: true, disabled: false, id:34},
+        //     {title:"some question?",isBonus:false,answerType:"string", answered: true, disabled: false, id:342},
+        //     {title:"some question?",isBonus:false,answerType:"string", answered: false, disabled: false, id:454},
+        //     {title:"some question?",isBonus:false,answerType:"number", answered: true, disabled: false, id:23},
+        //     {title:"some question?",isBonus:true,answerType:"string", answered: false, disabled: false, id:890},
+        // ],
         activeQuestion:0,
         admin: false
     }
 
-    constructor(props){
-        super(props)
-
-        var questions = this.props.round.questions
-        
-        questions = questions.concat(this.props.question.bonusQuestions.map(item => ({...item, isBonus: true})))
-        
-        for(var i=0; i < this.props.question.bonusQuestionCount - this.props.question.bonusQuestions.length; i++ ){
-            questions.push({isBonus: true})
-        }
-
-        this.state = {...this.state,userData,questions,activeQuestion:questions[0]._id}
+    componentDidMount(){
+        this.props.getRound()
     }
 
-    componentWillReceiveProps(nextProps){
-        var questions = this.props.question.questions.map(item => ({...item, isBonus: true }))
+    // constructor(props){
+    //     super(props)
+
+    //     var questions = this.props.round.questions
         
-        questions = questions.concat(this.props.question.bonusQuestions.map(item => ({...item, isBonus: true})))
+    //     questions = questions.concat(this.props.question.bonusQuestions.map(item => ({...item, isBonus: true})))
         
-        for(var i=0; i < this.props.question.bonusQuestionCount - this.props.question.bonusQuestions.length; i++ ){
-            questions.push({isBonus: true})
-        }
+    //     for(var i=0; i < this.props.question.bonusQuestionCount - this.props.question.bonusQuestions.length; i++ ){
+    //         questions.push({isBonus: true})
+    //     }
 
 
-        this.setState({userData, questions})
-    }
+    // }
+
+    // componentWillReceiveProps(nextProps){
+    //     var questions = this.props.question.questions.map(item => ({...item, isBonus: true }))
+        
+    //     questions = questions.concat(this.props.question.bonusQuestions.map(item => ({...item, isBonus: true})))
+        
+    //     for(var i=0; i < this.props.question.bonusQuestionCount - this.props.question.bonusQuestions.length; i++ ){
+    //         questions.push({isBonus: true})
+    //     }
+
+
+    //     this.setState({userData, questions})
+    // }
 
     onMenuItemClick(e, { name }){
         this.setState({activeMenuItem:name})
@@ -89,9 +94,6 @@ class Dashboard extends Component{
         this.setState({activeQuestion:name})
     }
 
-    componentDidMount(){
-        this.props.fetchQuestions()
-    }
 
     getActiveSection(){
 
@@ -100,15 +102,16 @@ class Dashboard extends Component{
             round: this.props.game.round,
             description: this.props.game.roundDescription,
             title: this.props.game.roundTitle,
-            imageURL: this.props.game.imageURL,            
+            imageURL: this.props.game.imageURL, 
+            levelComplete: this.props.game.levelComplete           
         }
         switch(this.state.activeMenuItem){
             case "play": return( 
                 <GameSegment 
                     gameData={gameData} 
-                    loading={this.props.question.loading}
-                    showBonus={this.props.question.showBonus}
-                    questions={this.state.questions}
+                    loading={this.props.game.loading}
+                    showBonus={this.props.user.bonusEligible}
+                    questions={this.props.question.questions}
                     activeQuestion={this.state.activeQuestion}
                     onQuestionTabClick={this.onQuestionTabClick}
                 />)
@@ -123,7 +126,7 @@ class Dashboard extends Component{
 
     render(){
 
-        if(!this.props.auth.authenticated){
+        if(!this.props.user.authenticated){
             return  <Redirect to="/login"/>
         }
 
@@ -139,7 +142,7 @@ class Dashboard extends Component{
                         menuItems={this.state.menuItems}
                         onMenuItemClick={this.onMenuItemClick.bind(this)}
                         activeMenuItem={this.state.activeMenuItem}
-                        admin={this.props.auth.admin}
+                        admin={this.props.user.admin}
                         logoutAction={this.props.logoutAction}
                         />
                         <div className={styles['game-section']}>      

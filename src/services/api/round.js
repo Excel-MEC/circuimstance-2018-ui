@@ -8,11 +8,13 @@ class API{
 
 
     async getRound(){
-        const round = await axios.get(`${this.URL}/`,{ headers: {
+        const round = await axios.get(`${this.URL}`,{ headers: {
             Authorization: `Bearer ${AuthAPI.token}`
-        } }).data
+        } })
 
-        return round
+        console.log(round)
+
+        return round.data
     }
 
     async promoteRound(){
@@ -22,12 +24,14 @@ class API{
     }
 
     async checkAnswer(questionId,answer){
-        return await axios.post(`${this.URL}/check`,{
+        const res = await  axios.post(`${this.URL}/check`,{
             id: questionId,
             answer
         },{ headers: {
             Authorization: `Bearer ${AuthAPI.token}`
-         } }).data
+         } })
+
+         return res.data
     }
 }
 

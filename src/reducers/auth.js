@@ -3,7 +3,7 @@ import RoundActionTypes from '../actions/round/types'
 
 const AUTH_DEFAULT_STATE = {
     loginProgress: false,
-    authenticated: false,
+    authenticated: true,
     admin: false,
     loginFailed: false,
     bonusEligible: false,

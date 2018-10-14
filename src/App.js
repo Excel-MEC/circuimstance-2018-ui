@@ -43,7 +43,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Home}/>
           <Route exact path="/login" component={Login}/>
-          <AdminRoute exact path="/admin" component={AdminPage}/>
+          {/* <AdminRoute exact path="/admin" component={AdminPage}/> */}
           <Route exact path="/dashboard" component={Dashboard}/>
           <Route path="/callback" component={CallbackPage}/>
         </div>

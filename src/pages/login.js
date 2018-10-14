@@ -12,7 +12,7 @@ import chip from '../img/chip-icon.jpg'
 
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.user
 })
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Image, Divider } from 'semantic-ui-react'
+import { Segment, Header, Image, Divider, Loader } from 'semantic-ui-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import QuestionBox from './dashboard.game-segment.question'
@@ -10,13 +10,20 @@ import styles from './dashboard.game-segment.module.css'
 export default class GameSegment extends Component{
 
     getActiveQuestion(){
-        for(var q of this.props.questions){
-            if(q.id === this.props.activeQuestion) return q
+
+        if(!this.props.questions){
+            return null
         }
+
+        return this.props.questions[this.props.activeQuestion < this.props.questions.length?this.props.activeQuestion:0]
     }
     render(){
 
         const activeQuestion = this.getActiveQuestion() 
+
+        if(!activeQuestion){
+            return <Loader/>
+        }
         return (
             <div className={styles['game-segment-container']}>
                 <Segment attached='top' className={styles['clear-fix']}>
@@ -34,19 +41,23 @@ export default class GameSegment extends Component{
                     {this.props.gameData.description && <Divider/>}
                     {this.props.gameData.description && <p>{this.props.gameData.description}</p>}
                 </Segment>
+                {!this.props.gameData.levelComplete &&
                 <Segment attached loading={this.props.loading}>
-                    <QuestionTab  
+                     <QuestionTab  
                         questions={this.props.questions}
                         activeQuestion={this.props.activeQuestion}
-                        onQuestionTabClick={this.props.onQuestionTabClick} />
-                </Segment>
+                        onQuestionTabClick={this.props.onQuestionTabClick}
+                        showBonus={this.props.showBonus}
+                         />
+                </Segment>}
                 <Segment attached loading={this.props.loading}>
                     <QuestionBox
                         title={activeQuestion.title}
-                        answerType={activeQuestion.answerType}
+                        isNumeric={activeQuestion.isNumeric}
                         submitLoading={false}
                         isBonus={activeQuestion.isBonus}
                         point={5}
+                        levelComplete={this.props.gameData.levelComplete}
                     />
                 </Segment>
             </div>

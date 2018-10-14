@@ -6,7 +6,8 @@ const GAME_DEFAULT_STATE = {
     roundTitle: '',
     imageURL: '',
     error: false,
-    loading: false
+    loading: false,
+    levelComplete:false
 }
 
 const game = ( state = GAME_DEFAULT_STATE, action ) => {
@@ -42,3 +43,5 @@ const game = ( state = GAME_DEFAULT_STATE, action ) => {
         default: return { ...state }
     }
 }
+
+export default game

@@ -25,6 +25,7 @@ const ButtonGroup = ({onSubmit,onSkip,showSkip}) => {
     </div>
 }
 
+
 export default class QuestionBox extends Component{
     state = {
         answer: ''
@@ -32,25 +33,40 @@ export default class QuestionBox extends Component{
 
     handleSubmit = () => this.props.onSubmit(this.state.answer)
     handleAnswerFieldChange = ({target}) => this.setState({answer: target.value})
-    render(){
+
+    getContent(){
+        if(this.props.levelComplete){
+            return (
+            <div>
+                <h1 style={{textAlign: 'center'}}> Congratulations! </h1>
+                <p style={{textAlign: 'center'}}> You've completed the level!</p>
+                <p style={{textAlign: 'center'}}> Wait for the next round</p>
+            </div>
+            )
+        }
         return (
             <div className={styles['question-box-container']}>
-                {this.props.isBonus && 
-                        <Message 
-                             icon='star' 
-                             header="Here's your bonus question!"
-                             content={`Bonus questions are worth ${this.props.point} points`}
-                        />}
+            {this.props.isBonus && 
+            
+                <Message 
+                        icon='star' 
+                        header="Here's your bonus question!"
+                        content={`Bonus questions are worth ${this.props.point} points`}
+                /> }
                 <Header as='h3'>
                     {this.props.title}
                 </Header>
-                <AnswerInput answerType={this.props.answerType} handler={this.handleAnswerFieldChange} loading={this.props.submitLoading} />
+                <AnswerInput answerType={this.props.isNumeric?"number":"text"} handler={this.handleAnswerFieldChange} loading={this.props.submitLoading} />
                 <ButtonGroup
                     showSkip={this.props.isBonus}
                     onSkip={this.props.onSkip}
                     onSubmit={this.handleSubmit}
                 />
-            </div>
+        </div>
         )
+    }
+
+    render(){
+        return this.getContent()
     }
 }
