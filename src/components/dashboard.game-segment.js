@@ -21,7 +21,7 @@ export default class GameSegment extends Component{
 
         const activeQuestion = this.getActiveQuestion() 
 
-        if(!activeQuestion){
+        if(!activeQuestion && !this.props.levelComplete){
             return <Loader/>
         }
         return (

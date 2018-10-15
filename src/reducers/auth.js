@@ -3,12 +3,14 @@ import RoundActionTypes from '../actions/round/types'
 
 const AUTH_DEFAULT_STATE = {
     loginProgress: false,
-    authenticated: true,
+    authenticated: false,
     admin: false,
     loginFailed: false,
     bonusEligible: false,
     name: 'Some Person',
-    avatarUrl: 'https://api.adorable.io/avatars/100/someuser'
+    avatarUrl: 'https://api.adorable.io/avatars/100/someuser',
+    score: 0,
+    rank: 0
 }
 
 const auth = ( state = AUTH_DEFAULT_STATE, action) => {
@@ -46,7 +48,9 @@ const auth = ( state = AUTH_DEFAULT_STATE, action) => {
                 loginFailed: false,
                 admin: false,
                 name: action.payload.auth.name,
-                avatarUrl: action.payload.auth.picture
+                avatarUrl: action.payload.auth.picture,
+                score: action.payload.user.score,
+                rank: action.payload.user.rank,
             }
         }
 

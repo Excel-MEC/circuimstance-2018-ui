@@ -4,7 +4,8 @@ import AuthAPI from './auth'
 
 class API{
 
-    URL = 'http://localhost:3000/testData/round.json'
+    // URL = 'http://localhost:3000/testData/round.json'
+    URL = 'http://localhost:4000/round/'
 
 
     async getRound(){

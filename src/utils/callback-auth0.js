@@ -4,7 +4,7 @@ import { handleAuth } from '../actions/auth'
 import { Redirect } from 'react-router-dom'
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.user
 })
 
 

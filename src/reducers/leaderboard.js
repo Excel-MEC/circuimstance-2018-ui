@@ -1,6 +1,7 @@
 import ActionTypes from '../actions/leaderboard/types'
 
 const LEADERBOARD_DEFAULT_STATE = {
+    users: []
 }
 
 const leaderboard = (state = LEADERBOARD_DEFAULT_STATE, action) => {
@@ -8,7 +9,7 @@ const leaderboard = (state = LEADERBOARD_DEFAULT_STATE, action) => {
         case ActionTypes.LEADERBOARD_UPDATE:{
             return {
                 ...state,
-                update: action.payload
+                users: action.payload.snapshot
             }
         }
         default: return state

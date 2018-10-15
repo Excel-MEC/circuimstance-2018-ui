@@ -28,8 +28,11 @@ const store = createStore(
 const socket = io(WS_HOST)
 
 socket.on('score update', (data) => {
+    console.log('score updated')
     store.dispatch(leaderboardUpdate(data))
 })
+
+
 
 
 

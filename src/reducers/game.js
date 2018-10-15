@@ -22,7 +22,8 @@ const game = ( state = GAME_DEFAULT_STATE, action ) => {
                 roundTitle: round.roundName,
                 imageURL: round.imageURL,
                 error: false,
-                loading: false
+                loading: false,
+                levelComplete: round.levelComplete
             }
         }
 

@@ -19,7 +19,8 @@ const mapStateToProps = state => ({
     user: state.user,
     round: state.round,
     game: state.game,
-    question: state.question
+    question: state.question,
+    leaderboard: state.leaderboard.users
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -115,7 +116,7 @@ class Dashboard extends Component{
                     activeQuestion={this.state.activeQuestion}
                     onQuestionTabClick={this.onQuestionTabClick}
                 />)
-            case "leaderboard": return <LeaderboardSegment playerList={this.state.leaderboard}/>
+            case "leaderboard": return <LeaderboardSegment playerList={this.props.leaderboard}/>
         }
     }
 

@@ -32,6 +32,8 @@ class API{
                 this.profile = authResult.idTokenPayload
                 this.token = authResult.idToken
 
+                console.log(this.token)
+
                 this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
                 resolve()
             })

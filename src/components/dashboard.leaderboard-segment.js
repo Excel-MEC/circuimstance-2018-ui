@@ -17,10 +17,10 @@ const LeaderboardSegment = props => (
                         <List.Content floated='right' verticalAlign='middle'>
                             <List.Header as='h4'>#{i+1}</List.Header>
                         </List.Content>
-                        <Image verticalAlign='middle' avatar src={`https://api.adorable.io/avatars/40/${player.firstName}${player.lastName}.png`}/>
+                        <Image verticalAlign='middle' avatar src={player.imageURL}/>
                         <List.Content verticalAlign='middle'>
                             <List.Header as='h3'>
-                                {`${player.firstName} ${player.lastName}`}
+                                {player.fullName}
                             </List.Header>
                             <List.Description>
                                 <FontAwesomeIcon icon="trophy" color="#eca536"/>{`  ${player.score} pts`}
