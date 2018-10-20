@@ -54,7 +54,7 @@ const Sidebar = props => (
                 <Button icon='power off' content='Sign Out' labelPosition="right" fluid onClick={props.logoutAction}/>
             </div>
             <div className={styles['sidebar-help-link']}>
-                <p>Need Help?</p>
+                <p><a href="https://excelmec.org/#/contacts" style={{color: '#4a4a4a'}}>Need Help?</a></p>
             </div>
         </div>
 

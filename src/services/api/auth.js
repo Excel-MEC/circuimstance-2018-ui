@@ -9,7 +9,8 @@ class API{
         domain : 'nvnmo.auth0.com',
         audience: 'https://nvnmo.auth0.com/userinfo',
         clientID: 'FHVUTB2fvLsBDM3nRk19fBVPA4GArhjj',
-        redirectUri: 'http://localhost:3000/callback',
+//        redirectUri: 'http://localhost:3000/callback',
+        redirectUri: 'http://circuimstance.excelmec.org/callback',
         responseType: 'token id_token',
         scope: 'openid profile'
     }) 
@@ -32,7 +33,6 @@ class API{
                 this.profile = authResult.idTokenPayload
                 this.token = authResult.idToken
 
-                console.log(this.token)
 
                 this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
                 resolve()

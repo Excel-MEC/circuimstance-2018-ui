@@ -5,9 +5,37 @@
     left: 50%;
     padding: 10px 20px;
     display: grid;
-    grid-template-rows: 4em auto 4em 2em;
+    grid-template-rows: 4em 5em auto 1em;
     border: 1px solid #eee;
     width: 24em;
+    background-color: white;
+    box-shadow: 0px 6px 17px 0px #888888;
+}
+.excel-logo,
+.mec-logo{
+    position: fixed;
+    height: 9rem;
+}
+
+.mec-logo{
+    right: 5px;
+}
+
+.login-bg{
+    background-repeat: repeat;
+    height: 100vh;
+}
+
+.login-box h2{
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 400;
+    letter-spacing: 0.3rem;
+    color: #5d5d5dab;
+}
+
+.login-box h2 span{
+    color: #000000d9;
+    font-weight: 500;
 }
 
 .login-header-icon,
@@ -32,6 +60,6 @@
 }
 @media (max-width:765px){
     .login-box{
-        top:30%;
+        top:50%;
     }
 }

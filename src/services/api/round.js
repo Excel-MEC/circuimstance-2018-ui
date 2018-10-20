@@ -5,11 +5,12 @@ import AuthAPI from './auth'
 class API{
 
     // URL = 'http://localhost:3000/testData/round.json'
-    URL = 'http://localhost:4000/round/'
+    // URL = 'http://localhost:4000/round'
+    URL = 'https://api.excelmec.org/round'
 
 
     async getRound(){
-        const round = await axios.get(`${this.URL}`,{ headers: {
+        const round = await axios.get(`${this.URL}/`,{ headers: {
             Authorization: `Bearer ${AuthAPI.token}`
         } })
 

@@ -3,6 +3,10 @@
     grid-template-rows: auto auto auto auto;
 }
 
+.bonus{
+    /* background-color: rgba(1, 158, 1, 0.527); */
+}
+
 .clear-fix{
     overflow: auto;
 }

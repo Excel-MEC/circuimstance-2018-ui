@@ -3,10 +3,10 @@ import { Route } from 'react-router-dom'
 import './App.css';
 import Loadable from 'react-loadable'
 
-import PrivateRoute from './utils/private-route'
-import AdminRoute from './utils/admin-route'
+// import PrivateRoute from './utils/private-route'
+// import AdminRoute from './utils/admin-route'
 import Loader from './utils/loader'
-import Home from './pages/home'
+// import Home from './pages/home'
 import CallbackPage from './utils/callback-auth0'
 // import AuthStore from './store/auth'
 // import AuthActions from './actions/auth'
@@ -30,10 +30,10 @@ const Dashboard = Loadable({
   loading: Loader
 })
 
-const AdminPage = Loadable({
-  loader: AdminPageImport,
-  loading: Loader
-})
+// const AdminPage = Loadable({
+//   loader: AdminPageImport,
+//   loading: Loader
+// })
 
 
 class App extends Component {
@@ -41,8 +41,8 @@ class App extends Component {
   render() {
     return (
         <div>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/login" component={Login}/>
+          <Route exact path="/" component={Login}/>
+          {/* <Route exact path="/login" component={Login}/> */}
           {/* <AdminRoute exact path="/admin" component={AdminPage}/> */}
           <Route exact path="/dashboard" component={Dashboard}/>
           <Route path="/callback" component={CallbackPage}/>

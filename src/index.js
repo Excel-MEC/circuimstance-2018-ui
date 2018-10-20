@@ -18,11 +18,12 @@ import io from 'socket.io-client'
 import { leaderboardUpdate } from './actions/leaderboard'
 
 
-const WS_HOST = 'http://localhost:4000'
+// const WS_HOST = 'http://localhost:4000'
+const WS_HOST = 'https://api.excelmec.org'
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk,logger)
+    applyMiddleware(thunk)//,logger)
 )
 
 const socket = io(WS_HOST)

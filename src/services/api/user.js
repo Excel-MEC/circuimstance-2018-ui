@@ -6,7 +6,8 @@ axios.defaults.headers.common["Content-Type"] = "application/json"
 
 class API{
     
-    URL = 'http://localhost:4000'
+    // URL = 'http://localhost:4000'
+    URL = 'https://api.excelmec.org'
     
     async getUserInfo(){
         return await axios.post(`${this.URL}/user/`,{ headers: {

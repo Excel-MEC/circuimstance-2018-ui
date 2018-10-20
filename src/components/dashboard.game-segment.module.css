@@ -11,3 +11,13 @@
     clear: both;
     display: table;
 }
+
+.story{
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin: 0 auto;
+    max-width: 95%;
+}

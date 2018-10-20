@@ -32,7 +32,7 @@ export default class QuestionBox extends Component{
     }
 
     handleSubmit = () => this.props.onSubmit(this.state.answer)
-    handleAnswerFieldChange = ({target}) => this.setState({answer: target.value})
+    handleAnswerFieldChange = ({target}) => this.setState({answer: this.props.isNumeric?Number.parseFloat(target.value):target.value})
 
     getContent(){
         if(this.props.levelComplete){
@@ -44,14 +44,18 @@ export default class QuestionBox extends Component{
             </div>
             )
         }
+
+        const qBoxStyle = styles['question-box-container'] + (this.props.isBonus?` ${styles['bonus']}`:'')
+
+
         return (
-            <div className={styles['question-box-container']}>
+            <div className={qBoxStyle}>
             {this.props.isBonus && 
             
                 <Message 
                         icon='star' 
                         header="Here's your bonus question!"
-                        content={`Bonus questions are worth ${this.props.point} points`}
+                        content={`Bonus questions are worth more points`}
                 /> }
                 <Header as='h3'>
                     {this.props.title}

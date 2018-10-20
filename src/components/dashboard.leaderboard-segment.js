@@ -12,7 +12,7 @@ const LeaderboardSegment = props => (
             </Header>
             <Divider/>
             <List divided relaxed>
-                {props.playerList.map((player,i) => (
+                {props.playerList.filter(player => player !== null).map((player,i) => (
                     <List.Item key={i}>
                         <List.Content floated='right' verticalAlign='middle'>
                             <List.Header as='h4'>#{i+1}</List.Header>

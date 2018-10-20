@@ -1,9 +1,3 @@
 .leaderboard-segment-container{
     padding: 2em;
 }
-
-@media (min-width:1075px){
-    .leaderboard-segment-container{
-        padding-left:0;
-    }
-}

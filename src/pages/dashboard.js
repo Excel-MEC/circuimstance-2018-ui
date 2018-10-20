@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth'
-import { getRound } from '../actions/round'
-import { fetchQuestions, fetchBonusQuestion } from '../actions/question'
+import { getRound, checkAnswer } from '../actions/round'
 import Hammer from 'react-hammerjs'
 import { Redirect } from  'react-router-dom'
-
+import { Icon } from 'semantic-ui-react'
 import Sidebar from '../components/dashboard.sidebar'
 import GameSegment from '../components/dashboard.game-segment'
 import LeaderboardSegment from '../components/dashboard.leaderboard-segment'
+import circumstanceLogo from '../img/circumstance.png'
+
 
 // import AuthStore from '../store/auth'
 
 import styles from './dashboard.module.css'
+import RulesSegment from '../components/dashboard.rules';
 
 
 const mapStateToProps = state => ({
@@ -25,7 +27,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     logoutAction: () => dispatch(logout()),
-    getRound: () => dispatch(getRound())
+    getRound: () => dispatch(getRound()),
+    checkAnswer: (questionId, answer) => dispatch(checkAnswer(questionId, answer)),
+    skipQuestion: () => dispatch(checkAnswer())
     // fetchQuestions: () => dispatch(fetchQuestions()),
     // fetchBonusQuestion: () => dispatch(fetchBonusQuestion()),
 })
@@ -34,61 +38,33 @@ class Dashboard extends Component{
     state = {
         showSidebar : true,
         menuItems: [
+            {name: 'story', title: 'Story', icon: 'book'},
             { name: 'play', title: 'Play', icon: 'play'},
             { name: 'leaderboard', title: 'Leaderboard', icon: 'trophy'},
+            { name: 'rules', title: 'Rules', icon:'clipboard list' }
         ],
-        activeMenuItem: 'play',
-        leaderboard: [
-            { firstName: 'Navin', score: 123,lastName: 'Mohan'},
-            { firstName: 'Arjun', score: 122,lastName: 'Nair'},
-            { firstName: 'Roshan', score: 121,lastName: 'V'},
-            { firstName: 'Renjith', score: 103,lastName: 'PK'},
-        ],
-        // questions: [
-        //     {title:"some question?",isBonus:false,answerType:"number", answered: false, disabled: false, id:12},
-        //     {title:"some question?",isBonus:false,answerType:"string", answered: true, disabled: false, id:34},
-        //     {title:"some question?",isBonus:false,answerType:"string", answered: true, disabled: false, id:342},
-        //     {title:"some question?",isBonus:false,answerType:"string", answered: false, disabled: false, id:454},
-        //     {title:"some question?",isBonus:false,answerType:"number", answered: true, disabled: false, id:23},
-        //     {title:"some question?",isBonus:true,answerType:"string", answered: false, disabled: false, id:890},
-        // ],
+        activeMenuItem: 'story',
         activeQuestion:0,
-        admin: false
+        admin: false,
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.question.questions.length){
+            for(var i=this.state.activeQuestion;i< nextProps.question.questions.length;i++){
+                if(!nextProps.question.questions[i].answered && !(nextProps.question.questions[i].isBonus && !nextProps.user.bonusEligible)){
+                    this.setState({activeQuestion: i})
+                    return
+                }
+            }
+        }
     }
 
     componentDidMount(){
         this.props.getRound()
     }
 
-    // constructor(props){
-    //     super(props)
-
-    //     var questions = this.props.round.questions
-        
-    //     questions = questions.concat(this.props.question.bonusQuestions.map(item => ({...item, isBonus: true})))
-        
-    //     for(var i=0; i < this.props.question.bonusQuestionCount - this.props.question.bonusQuestions.length; i++ ){
-    //         questions.push({isBonus: true})
-    //     }
-
-
-    // }
-
-    // componentWillReceiveProps(nextProps){
-    //     var questions = this.props.question.questions.map(item => ({...item, isBonus: true }))
-        
-    //     questions = questions.concat(this.props.question.bonusQuestions.map(item => ({...item, isBonus: true})))
-        
-    //     for(var i=0; i < this.props.question.bonusQuestionCount - this.props.question.bonusQuestions.length; i++ ){
-    //         questions.push({isBonus: true})
-    //     }
-
-
-    //     this.setState({userData, questions})
-    // }
-
     onMenuItemClick(e, { name }){
-        this.setState({activeMenuItem:name})
+        this.setState({activeMenuItem:name,showSidebar:false})
     }
 
     onQuestionTabClick = (e, { name }) => {
@@ -107,8 +83,12 @@ class Dashboard extends Component{
             levelComplete: this.props.game.levelComplete           
         }
         switch(this.state.activeMenuItem){
-            case "play": return( 
-                <GameSegment 
+            case "story":
+            case "play" : return( 
+                <GameSegment
+                    showStory={this.state.activeMenuItem === 'story'}
+                    onQuestionSubmit={this.onQuestionSubmit}
+                    onQuestionSkip={this.props.skipQuestion}
                     gameData={gameData} 
                     loading={this.props.game.loading}
                     showBonus={this.props.user.bonusEligible}
@@ -117,7 +97,16 @@ class Dashboard extends Component{
                     onQuestionTabClick={this.onQuestionTabClick}
                 />)
             case "leaderboard": return <LeaderboardSegment playerList={this.props.leaderboard}/>
+            case "rules": return <RulesSegment/>
         }
+    }
+
+    onQuestionSubmit = (answer) => {
+
+        const questionId = this.props.question.questions[this.state.activeQuestion].id
+
+        this.props.checkAnswer(questionId,answer)
+
     }
 
     handleSwipe = (e) => {
@@ -128,7 +117,7 @@ class Dashboard extends Component{
     render(){
 
         if(!this.props.user.authenticated){
-            return  <Redirect to="/login"/>
+            return  <Redirect to="/"/>
         }
 
         const userData = this.props.user
@@ -146,7 +135,11 @@ class Dashboard extends Component{
                         admin={this.props.user.admin}
                         logoutAction={this.props.logoutAction}
                         />
-                        <div className={styles['game-section']}>      
+                        <div className={styles['game-section']}>
+                            <div className={`${styles['nav-menu']} ${styles['show-on-mobile']}`}>
+                                <img src={circumstanceLogo} />
+                                <Icon circular name='bars' onClick={() => this.setState({showSidebar:true})}/>
+                            </div>
                             {this.getActiveSection()}
                         </div>
                 </div>
