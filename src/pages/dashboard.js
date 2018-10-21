@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { logout } from '../actions/auth'
+import { logout, getUserInfo } from '../actions/auth'
 import { getRound, checkAnswer } from '../actions/round'
 import Hammer from 'react-hammerjs'
 import { Redirect } from  'react-router-dom'
@@ -29,7 +29,8 @@ const mapDispatchToProps = dispatch => ({
     logoutAction: () => dispatch(logout()),
     getRound: () => dispatch(getRound()),
     checkAnswer: (questionId, answer) => dispatch(checkAnswer(questionId, answer)),
-    skipQuestion: () => dispatch(checkAnswer())
+    skipQuestion: () => dispatch(checkAnswer()),
+    getUserInfo: () => dispatch(getUserInfo())
     // fetchQuestions: () => dispatch(fetchQuestions()),
     // fetchBonusQuestion: () => dispatch(fetchBonusQuestion()),
 })
@@ -61,6 +62,9 @@ class Dashboard extends Component{
 
     componentDidMount(){
         this.props.getRound()
+        if(this.props.user.rank === 0){
+            this.props.getUserInfo()
+        }
     }
 
     onMenuItemClick(e, { name }){

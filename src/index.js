@@ -23,7 +23,7 @@ const WS_HOST = 'https://api.excelmec.org'
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk)//,logger)
+    applyMiddleware(thunk,logger)
 )
 
 const socket = io(WS_HOST)

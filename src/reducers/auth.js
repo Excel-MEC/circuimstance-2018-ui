@@ -1,14 +1,30 @@
 import ActionTypes from '../actions/auth/types'
 import RoundActionTypes from '../actions/round/types'
 
+import AuthAPI from '../services/api/auth'
+
+AuthAPI.loadLocalData()
+
+console.log('auth reducer ',AuthAPI.isAuthenticated(), AuthAPI)
+
+const userProfile = {}
+const isAuthenticated = AuthAPI.isAuthenticated()
+
+if(isAuthenticated){
+    userProfile['name'] = AuthAPI.profile.name  || 'Some Person'
+    userProfile['avatarUrl'] = AuthAPI.profile.picture || 'https://api.adorable.io/avatars/100/someuser'
+}else{
+    userProfile['name'] = 'Some Person'
+    userProfile['avatarUrl'] = 'https://api.adorable.io/avatars/100/someuser'
+}
+
 const AUTH_DEFAULT_STATE = {
     loginProgress: false,
-    authenticated: false,
+    authenticated: isAuthenticated,
     admin: false,
     loginFailed: false,
     bonusEligible: false,
-    name: 'Some Person',
-    avatarUrl: 'https://api.adorable.io/avatars/100/someuser',
+    ...userProfile,
     score: 0,
     rank: 0
 }

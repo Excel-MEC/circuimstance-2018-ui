@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import './App.css';
 import Loadable from 'react-loadable'
 
@@ -42,7 +42,7 @@ class App extends Component {
     return (
         <div>
           <Route exact path="/" component={Login}/>
-          {/* <Route exact path="/login" component={Login}/> */}
+          <Route exact path="/login" component={() => <Redirect to="/"/>}/>
           {/* <AdminRoute exact path="/admin" component={AdminPage}/> */}
           <Route exact path="/dashboard" component={Dashboard}/>
           <Route path="/callback" component={CallbackPage}/>
